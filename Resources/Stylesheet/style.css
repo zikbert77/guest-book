@@ -13,8 +13,10 @@ table {
 .captcha {
     margin-top: 7px;
     float: right;
-    margin-right: 10px;
     border: 2px solid rgb(230, 230, 230);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 img.captcha {

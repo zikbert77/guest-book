@@ -28,12 +28,42 @@ class IndexController extends Controller
     public function addMessage()
     {
 
-        if ( $this->checkLogin() ){
-            $this->view('add-message');
-        } else {
-            $this->redirect( '/login' );
-        }
+            if( $this->checkLogin() ) {
 
+                $user = new User;
+                $user = $user->getInfo();
+
+                if ( isset($_POST['add-message']) ) {
+
+                    $msg['username'] = $_POST['username'];
+                    $msg['user_id'] = User::getEmailByUserName($msg['username']);
+                    $msg['email'] = $_POST['email'];
+                    $msg['homepage'] = $_POST['url'];
+                    $msg['text'] = $_POST['text'];
+
+                    if ( $_SESSION['captcha'] != md5($_POST['captcha']) )
+                        $this->errors[] = "Невірно введено капчу!";
+
+
+                    if ( !$this->errors ) {
+
+                        $message = new Message();
+                        $result = $message->addMessage($msg);
+
+                        if ( $result ) {
+
+                            $success = true;
+                            $this->redirect('/', 3);
+
+                        }
+
+                    }
+
+
+                }
+            }
+
+        require_once ROOT . '/Views/add-message.php';
         return true;
     }
 }

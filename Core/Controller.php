@@ -13,7 +13,12 @@ class Controller
         return false;
     }
 
-    protected function redirect( $to ) {
+    protected function redirect( $to, $pause = false ) {
+
+        if ( $pause ) {
+            sleep( $pause );
+        }
+
         header("Location: $to");
     }
 

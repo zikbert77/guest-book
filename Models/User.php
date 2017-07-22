@@ -9,7 +9,7 @@ class User extends Model
 {
 
 
-    public function checkEmailExist($email)
+    public function checkEmailExist( $email )
     {
         $stmt = $this->db->prepare('SELECT user_id FROM users WHERE email = :email');
         $result = $stmt->execute(array('email' => $email));
@@ -23,7 +23,7 @@ class User extends Model
         }
     }
 
-    public function checkUsernameExist($username)
+    public function checkUsernameExist( $username )
     {
         $stmt = $this->db->prepare('SELECT user_id FROM users WHERE username = :username');
         $result = $stmt->execute(array('username' => $username));
@@ -39,12 +39,26 @@ class User extends Model
     public static function getUserNameById( $id )
     {
         $stmt = self::$statdb->prepare('SELECT username FROM users WHERE user_id = :user_id');
-        $result = $stmt->execute(array('user_id' => $id));
+        $stmt->execute(array('user_id' => $id));
 
         $username = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ( $username ) {
             return $username['username'];
+        } else {
+            return null;
+        }
+    }
+
+    public static function getEmailByUserName( $username )
+    {
+        $stmt = self::$statdb->prepare('SELECT user_id FROM users WHERE username = :username');
+        $stmt->execute(array('username' => $username));
+
+        $user_id = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ( $user_id ) {
+            return $user_id['user_id'];
         } else {
             return null;
         }
@@ -64,7 +78,21 @@ class User extends Model
         }
     }
 
-    public function login($userInfo)
+    public function getInfo()
+    {
+        $user_id = (isset($_SESSION['user_id']))? $_SESSION['user_id'] : null;
+
+        $stmt = $this->db->prepare('SELECT username, email FROM users WHERE user_id = :user_id');
+        $result = $stmt->execute(array('user_id' => $user_id));
+        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if ($result) {
+            return $user;
+        } else {
+            return false;
+        }
+    }
+
+    public function login( $userInfo )
     {
         $stmt = $this->db->prepare('SELECT * FROM users WHERE username = :username AND password = :password');
         $result = $stmt->execute(array('username' => $userInfo['username'], 'password' => $userInfo['password']));
@@ -81,7 +109,7 @@ class User extends Model
         }
     }
 
-    public function register($userInfo)
+    public function register( $userInfo )
     {
         $stmt = $this->db->prepare('INSERT INTO users( email, username, password ) VALUES( :email, :username, :password )');
         $result = $stmt->execute(array('email' => $userInfo['email'],'username' => $userInfo['username'], 'password' => $userInfo['password1']));
