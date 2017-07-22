@@ -17,9 +17,15 @@ use Models\User;
 class UserController extends Controller
 {
 
+    public function __construct()
+    {
+        if ( !$this->checkLogin() )
+            $this->redirect('/login');
+    }
+
     public function userPage(){
 
-        echo $_SESSION['user_name'];
+        $this->view('user_cabinet');
         return true;
     }
 

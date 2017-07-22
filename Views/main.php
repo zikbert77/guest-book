@@ -10,14 +10,18 @@
                         <td><a href="#">Електронна адреса</a></td>
                         <td><a href="#">Домашня сторінка</a></td>
                         <td><a href="#">Повідомлення</a></td>
+                        <td><a href="#">Дата</a></td>
                     </tr>
 
-                    <tr>
-                        <td>zikbert77</td>
-                        <td>zikbert77@gma8l.com</td>
-                        <td>about:blank</td>
-                        <td>Lorem ipsun dolor</td>
-                    </tr>
+                    <?php foreach ( $msgs as $msg ): ?>
+                        <tr>
+                            <td><?= $msg['user_name'] ?></td>
+                            <td><?= $msg['user_email'] ?></td>
+                            <td><?= $msg['homepage'] ?></td>
+                            <td><?= $msg['text'] ?></td>
+                            <td><?= $msg['date'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </table>
             </div>
         </div>

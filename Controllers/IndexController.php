@@ -3,8 +3,8 @@
 namespace Controllers;
 
 include_once ROOT . '/Core/Controller.php';
-include_once ROOT.'/Models/User.php';
-include_once ROOT.'/Models/Message.php';
+include_once ROOT . '/Models/User.php';
+include_once ROOT . '/Models/Message.php';
 
 use Core\Controller;
 use Core\Model;
@@ -18,9 +18,10 @@ class IndexController extends Controller
     public function show()
     {
         $messsage = new Message();
-        $msgs = $messsage->get();
+        $msgs = $messsage->getAllMessages();
 
-        $this->view('main');
+
+        require_once ROOT . '/Views/main.php';
         return true;
     }
 

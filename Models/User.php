@@ -8,6 +8,7 @@ use Core\Model;
 class User extends Model
 {
 
+
     public function checkEmailExist($email)
     {
         $stmt = $this->db->prepare('SELECT user_id FROM users WHERE email = :email');
@@ -32,6 +33,34 @@ class User extends Model
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static function getUserNameById( $id )
+    {
+        $stmt = self::$statdb->prepare('SELECT username FROM users WHERE user_id = :user_id');
+        $result = $stmt->execute(array('user_id' => $id));
+
+        $username = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ( $username ) {
+            return $username['username'];
+        } else {
+            return null;
+        }
+    }
+
+    public static function getEmailById( $id )
+    {
+        $stmt = self::$statdb->prepare('SELECT email FROM users WHERE user_id = :user_id');
+         $stmt->execute(array('user_id' => $id));
+
+        $email = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if ( $email ) {
+            return $email['email'];
+        } else {
+            return null;
         }
     }
 
