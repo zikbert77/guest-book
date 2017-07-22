@@ -1,17 +1,23 @@
 <?php
+namespace Resources;
 
 class Db {
     
     public static function getConnection(){
 
-        $params = [
-            'host' => 'localhost',
-            'user' => 'root',
-            'pass' => '',
-            'db_name' => 'guest_book',
-        ];
-        
-        $db = new mysqli($params['host'], $params['user'], $params['pass'], $params['db_name']);
+        $host = 'localhost';
+        $user = 'root';
+        $pass = '';
+        $dbname = 'guest-book';
+
+        try {
+
+            $db = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+
+        }
+        catch(PDOException $e) {
+            echo $e->getMessage();
+        }
         
         return $db;
         

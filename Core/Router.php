@@ -1,4 +1,8 @@
 <?php
+namespace Core;
+
+use Controllers;
+
 class Router {
 
     private $routes;
@@ -41,6 +45,8 @@ class Router {
                 if(file_exists($controllerPath)){
                     include_once($controllerPath);
                 }
+
+                $controllerName = '\Controllers\\' . $controllerName;
 
                 $controllerObject = new $controllerName;
 

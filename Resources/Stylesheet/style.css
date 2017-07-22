@@ -1,0 +1,23 @@
+span.title {
+    font-size: 32px;
+}
+
+span.user-panel {
+    margin-top: 10px;
+    float: right;
+}
+table {
+    margin: 0 auto;
+}
+
+.captcha {
+    margin-top: 7px;
+    float: right;
+    margin-right: 10px;
+    border: 2px solid rgb(230, 230, 230);
+}
+
+img.captcha {
+
+    cursor: pointer;
+}

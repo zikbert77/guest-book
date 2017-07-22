@@ -8,9 +8,14 @@
 
 return [
 
-    'admin/login/([0-9+])' => 'AdminController/login/$1',
-    'admin/login' => 'AdminController/login',
+    'login' => 'AuthController/getLogin',
+    'logout' => 'AuthController/logOut',
 
+    'register' => 'AuthController/registerUser',
+
+    'user/([0-9]+)' => 'UserController/userPage',
+
+    'add-message' => 'IndexController/addMessage',
     '' => 'IndexController/show'
 
 

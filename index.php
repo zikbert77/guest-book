@@ -1,5 +1,8 @@
 <?php
+namespace Core;
 
+use Core;
+session_start();
     //FRONT CONTROLLER
 
     //1. Загальні налаштування

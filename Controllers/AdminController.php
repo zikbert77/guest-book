@@ -1,5 +1,5 @@
 <?php
-
+namespace Controllers;
 /**
  * Created by PhpStorm.
  * User: Bogdan
@@ -8,11 +8,5 @@
  */
 class AdminController
 {
-    public function login($var1 = 0)
-    {
 
-        print 'AdminController->login' . $var1;
-
-        return true;
-    }
 }
