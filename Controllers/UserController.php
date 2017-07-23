@@ -19,6 +19,8 @@ class UserController extends Controller
 
     public function __construct()
     {
+        $this->translate();
+
         if ( !$this->checkLogin() )
             $this->redirect('/login');
     }

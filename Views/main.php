@@ -2,15 +2,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <a class="btn btn-outline-primary" href="/add-message">Залишити повідомлення</a>
+                <a class="btn btn-outline-primary" href="/add-message"><?= WRITE_MESSAGE ?></a>
                 <br><br>
                 <table class="table table-bordered">
                     <tr>
-                        <td><a href="#">Ім'я користувача</a></td>
-                        <td><a href="#">Електронна адреса</a></td>
-                        <td><a href="#">Домашня сторінка</a></td>
-                        <td><a href="#">Повідомлення</a></td>
-                        <td><a href="#">Дата</a></td>
+                        <td><a href="<?= ( $sort == 'username_asc' )? "/page-$page/username_desc/" : "/page-$page/username_asc/"  ?>"><?= USERNAME ?></a></td>
+                        <td><a href="<?= ( $sort == 'email_asc' )? "/page-$page/email_desc/" : "/page-$page/email_asc/"  ?>"><?= EMAIL ?></a></td>
+                        <td><?= HOMEPAGE ?></td>
+                        <td><?= MESSAGE ?></td>
+                        <td><a href="<?= ( $sort == 'date_asc' )? "/page-$page/date_desc/" : "/page-$page/date_asc/"  ?>"><?= DATE ?></a></td>
                     </tr>
 
                     <?php foreach ( $msgs as $msg ): ?>
@@ -24,16 +24,15 @@
                     <?php endforeach; ?>
                 </table>
 
-                <div class="pagination">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
+                <div class="paginations">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <hr>
+                            <nav aria-label="Page navigation">
+                                <?= $pagination->get() ?>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
 
             </div>

@@ -9,9 +9,9 @@ class User extends Model
 {
 
 
-    public function checkEmailExist( $email )
+    public static function checkEmailExist( $email )
     {
-        $stmt = $this->db->prepare('SELECT user_id FROM users WHERE email = :email');
+        $stmt = self::$statdb->prepare('SELECT user_id FROM users WHERE email = :email');
         $result = $stmt->execute(array('email' => $email));
 
         $email = $stmt->rowCount();
@@ -23,9 +23,9 @@ class User extends Model
         }
     }
 
-    public function checkUsernameExist( $username )
+    public static function checkUsernameExist( $username )
     {
-        $stmt = $this->db->prepare('SELECT user_id FROM users WHERE username = :username');
+        $stmt = self::$statdb->prepare('SELECT user_id FROM users WHERE username = :username');
         $result = $stmt->execute(array('username' => $username));
 
         $uname = $stmt->rowCount();
@@ -34,6 +34,25 @@ class User extends Model
         } else {
             return false;
         }
+    }
+
+    public function getUserAgent()
+    {
+        $user_agent = $_SERVER["HTTP_USER_AGENT"];
+
+        if (strpos($user_agent, "Firefox") !== false)
+            $browser = "Firefox";
+        elseif (strpos($user_agent, "Opera") !== false)
+            $browser = "Opera";
+        elseif (strpos($user_agent, "Chrome") !== false)
+            $browser = "Chrome";
+        elseif (strpos($user_agent, "MSIE") !== false)
+            $browser = "Internet Explorer";
+        elseif (strpos($user_agent, "Safari") !== false)
+            $browser = "Safari";
+        else $browser = "Undefined";
+
+        return $browser;
     }
 
     public static function getUserNameById( $id )
@@ -92,6 +111,23 @@ class User extends Model
         }
     }
 
+    public function getIp()
+    {
+        if ( !empty( $_SERVER['HTTP_CLIENT_IP'] ) )
+        {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        elseif ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )
+        {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        else
+        {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
+    }
+
     public function login( $userInfo )
     {
         $stmt = $this->db->prepare('SELECT * FROM users WHERE username = :username AND password = :password');
@@ -99,8 +135,20 @@ class User extends Model
         $user = $stmt->fetch();
         if ($result) {
 
+
+            //Check than user is admin
+            if ( $user['stat_id'] == 3 )
+                $_SESSION['is_admin'] = 1;
+            else
+                $_SESSION['is_admin'] = 0;
+
+
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['user_name'] = $user['username'];
+
+            $this->saveUserInfo($user['user_id']);
+
+            //Redirect to user cabinet
             header("Location: /user/{$user['user_id']}");
 
             return true;
@@ -114,12 +162,27 @@ class User extends Model
         $stmt = $this->db->prepare('INSERT INTO users( email, username, password ) VALUES( :email, :username, :password )');
         $result = $stmt->execute(array('email' => $userInfo['email'],'username' => $userInfo['username'], 'password' => $userInfo['password1']));
         $userId = $this->db->lastInsertId();
+
+        $stmt1 = $this->db->prepare('INSERT INTO users_info( ip, browser, user_id) VALUES ( :ip, :browser, :user_id )');
+        $stmt1->execute(array('ip' => $this->getIp(), 'browser' => $this->getUserAgent(), 'user_id' => $userId));
+
         if ($result) {
 
             return $userId;
         } else {
             return null;
         }
+    }
+
+    public function saveUserInfo ( $userId )
+    {
+        $user_agent = $this->getUserAgent();
+
+        $user_ip = $this->getIp();
+
+        $stmt = $this->db->prepare('UPDATE users_info SET ip = :ip, browser = :browser WHERE user_id = :user_id');
+        $stmt->execute(array('ip' => $user_ip, 'browser' => $user_agent, 'user_id' => $userId));
+
     }
 
 

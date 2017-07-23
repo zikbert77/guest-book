@@ -2,6 +2,7 @@
 namespace Core;
 
 use Controllers;
+use Controllers\IndexController;
 
 class Router {
 

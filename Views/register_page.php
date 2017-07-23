@@ -24,30 +24,30 @@
 
                         <form method="post" action="#">
                             <div class="form-group">
-                                <label for="username">Ім'я користувача</label>
-                                <input type="text" class="form-control" name="username" value="<?= isset($_POST['username'])? $_POST['username'] : '' ?>" placeholder="username" required>
+                                <label for="username"><?= USERNAME ?> <?= USERNAME_DESC ?></label>
+                                <input type="text" class="form-control" name="username" value="<?= isset($_POST['username'])? $_POST['username'] : '' ?>" placeholder="<?= USERNAME ?>" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="pass">Пароль</label>
+                                <label for="pass"><?= PASSWORD ?> <?= PASSWORD_DESC ?></label>
                                 <input type="password" class="form-control" name="pass1" required>
                             </div>
                             <div class="form-group">
-                                <label for="pass">Повторіть пароль</label>
+                                <label for="pass"><?= PASSWORD2 ?></label>
                                 <input type="password" class="form-control" name="pass2" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Електронна адреса</label>
-                                <input type="email" class="form-control" name="email" value="<?= isset($_POST['email'])? $_POST['email'] : '' ?>" placeholder="Email" required>
+                                <label for="email"><?= EMAIL ?></label>
+                                <input type="email" class="form-control" name="email" value="<?= isset($_POST['email'])? $_POST['email'] : '' ?>" placeholder="<?= EMAIL ?>" required>
                             </div>
 
                             <div class="form-group form-captcha">
-                                <label for="captcha">Капча</label>
+                                <label for="captcha"><?= CAPTCHA ?></label>
                                 <img class="captcha" id="captcha" src="/Modules/Captcha/Captcha.php"><br><br><br>
-                                <input type="text" class="form-control" name="captcha" placeholder="Введіть капчу" required>
+                                <input type="text" class="form-control" name="captcha" placeholder="<?= ENTER_CAPTCHA ?>" required>
                             </div>
-                            <input type="submit" class="btn btn-outline-success" name="register" value="Зареєструватися">
+                            <input type="submit" class="btn btn-outline-success" name="register" value="<?= REGISTER ?>">
                         </form>
                     </div>
                 </div>
