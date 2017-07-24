@@ -4,6 +4,22 @@
         <div class="row">
             <div class="col-md-12">
 
+                <div class="errors">
+                    <?php if ( $this->errors ):  ?>
+
+                        <ul>
+
+                            <?php  foreach ( $this->errors as $error ): ?>
+
+                                <li><?= $error ?></li>
+
+                            <?php endforeach; ?>
+                        </ul>
+
+                    <?php endif; ?>
+                </div>
+
+
                 <div class="row">
                     <div class="col-lg-6">
                         <form method="post" action="#">
@@ -23,7 +39,9 @@
                                 <input type="text" class="form-control" name="captcha" placeholder="<?= ENTER_CAPTCHA ?>" required>
                             </div>
                             <input type="submit" class="btn btn-outline-success" name="login" value="<?= LOGIN ?>">
+                            <a href="/forgot"><?= FORGOT_PASSWORD ?></a>
                         </form>
+
                     </div>
                 </div>
 

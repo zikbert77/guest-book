@@ -23,9 +23,9 @@ class User extends Model
         }
     }
 
-    public static function checkUsernameExist( $username )
+    public  function checkUsernameExist( $username )
     {
-        $stmt = self::$statdb->prepare('SELECT user_id FROM users WHERE username = :username');
+        $stmt = $this->db->prepare('SELECT user_id FROM users WHERE username = :username');
         $result = $stmt->execute(array('username' => $username));
 
         $uname = $stmt->rowCount();
@@ -130,8 +130,8 @@ class User extends Model
 
     public function login( $userInfo )
     {
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE username = :username AND password = :password');
-        $result = $stmt->execute(array('username' => $userInfo['username'], 'password' => $userInfo['password']));
+        $stmt = $this->db->prepare('SELECT * FROM users WHERE username = :username AND password = :password AND stat_id <> :stat_id ');
+        $result = $stmt->execute(array('username' => $userInfo['username'], 'password' => $userInfo['password'], 'stat_id' => 2));
         $user = $stmt->fetch();
         if ($result) {
 
@@ -147,9 +147,6 @@ class User extends Model
             $_SESSION['user_name'] = $user['username'];
 
             $this->saveUserInfo($user['user_id']);
-
-            //Redirect to user cabinet
-            header("Location: /user/{$user['user_id']}");
 
             return true;
         } else {
@@ -183,6 +180,19 @@ class User extends Model
         $stmt = $this->db->prepare('UPDATE users_info SET ip = :ip, browser = :browser WHERE user_id = :user_id');
         $stmt->execute(array('ip' => $user_ip, 'browser' => $user_agent, 'user_id' => $userId));
 
+    }
+
+    public static function updatePass ( $username, $password )
+    {
+        $stmt = self::$statdb->prepare('UPDATE `users` SET password = :password WHERE username = :username ');
+        $result = $stmt->execute(array('username' => $username, 'password' => $password));
+
+        if ($result) {
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

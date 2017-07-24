@@ -18,6 +18,7 @@ return [
     'login' => 'AuthController/getLogin',
     'logout' => 'AuthController/logOut',
     'register' => 'AuthController/registerUser',
+    'forgot' => 'AuthController/forgotPass',
 
 
     //User routes
@@ -25,6 +26,8 @@ return [
 
 
     //Site-message routes
+    'false' => 'IndexController/false',
+    'success' => 'IndexController/success',
     'add-message' => 'IndexController/addMessage',
     'changeLang' => 'IndexController/ChangeLang',
     'page-([0-9]+)/sort-([a-z+])' => 'IndexController/show/$1/2',

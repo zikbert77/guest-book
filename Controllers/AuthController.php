@@ -18,6 +18,67 @@ use Models\User;
 
 class AuthController extends Controller
 {
+    public function forgotPass ()
+    {
+        $this->translate();
+
+        if ( !$this->checkLogin() ) {
+
+            if ( isset( $_POST['forgot'] ) ) {
+
+                $username = trim(strip_tags(htmlspecialchars($_POST['username'])));
+                $user = new User();
+
+                if ( ! $user->checkUsernameExist( $username ) )
+                    $this->errors[] = USERNAME_NOT_EXIST;
+
+                if ( ! $this->errors ) {
+
+                    $email = User::getEmailByUserName( $username );
+
+                    $newPass = '';
+                    $string = '';
+
+                    $simvols = array ("0","1","2","3","4","5","6","7","8","9",
+                        "a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+                        "A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+
+                    for ( $key = 0; $key < 6; $key++ ) {
+
+                        shuffle ( $simvols );
+                        $string = $string.$simvols[1];
+
+                    }
+
+                    $newPass = md5($string);
+
+                    if ( User::updatePass( $username, $newPass ) ) {
+
+                        $msg = FORGOT_PASSWORD . ' : ' . $username . "<br>New pass : " . $string;
+                        mail( $email, FORGOT_PASSWORD, $msg );
+
+                        $this->redirect('/success');
+                        return true;
+
+                    } else {
+
+                        $this->redirect('/false');
+                        return false;
+                    }
+
+                }
+
+            }
+
+
+
+
+            $this->view('forgot_page');
+        }
+
+        return true;
+    }
+
     public function getLogin()
     {
 
@@ -39,7 +100,20 @@ class AuthController extends Controller
                     $login['password'] = md5($_POST['pass']);
 
                     $user = new User();
-                    $user->login($login);
+
+                    $login = $user->login($login);
+
+                    if ( ! $login ) {
+
+                        $this->errors[] = LOGIN_ERROR_OR_BLOCKED;
+                        $this->redirect( '/', 2 );
+
+                        return false;
+
+                    }
+
+                    $this->redirect( '/');
+
                 }
 
 

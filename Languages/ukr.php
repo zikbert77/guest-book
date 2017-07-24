@@ -7,15 +7,18 @@
  */
 
 define('LOGIN', 'Увійти');
+define('LOGIN_ERROR_OR_BLOCKED', 'Такого користувача не існує, або він заблокований!');
 define('LOGOUT', 'Вийти');
 define('REGISTER', 'Зареєструватися');
 define('STATUS', 'Статус');
 define('USERNAME', 'Ім\'я користувача');
 define('USERNAME_EXIST', 'Таке ім\'я користувача уже зареєстровано');
+define('USERNAME_NOT_EXIST', 'Таке ім\'я користувача не зареєстровано');
 define('USERNAME_ERROR', 'Логін введено некоректно');
 define('USERNAME_LENGTH_ERROR', 'Довжина логіну повинна бути від 3 до 16 символів!');
 define('USERNAME_DESC', '(Дозволяється використовувати букви, цифри, дефізи і підкреслювання від 3 до 16 символів)');
 define('PASSWORD', 'Пароль');
+define('FORGOT_PASSWORD', 'Відновлення паролю');
 define('PASSWORD_NOT_MATCH', 'Паролі не співпадають');
 define('PASSWORD_ERROR', 'Пароль введено некоректно');
 define('PASSWORD_LENGTH_ERROR', 'Довжина паролю повинна бути від 6 до 18 символів!');
@@ -42,6 +45,8 @@ define('CHANGE', 'Змінити');
 define('CHANGE_LANG', 'Змінити мову');
 
 //Other
+define('SUCCESS', 'Операцію успішно виконано');
+define('FALSE', 'Операцію не виконано');
 define('PREVIEW', 'Попередній перегляд');
 define('WRITE_MESSAGE', 'Залишити повідомлення');
 define('MUST_LOGIN_OR_REGISTER', 'Для додавання повідомлення ви повинні увійти в аккаунт або зареєструватися');

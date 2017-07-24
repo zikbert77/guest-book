@@ -20,7 +20,7 @@
                             <td><?= $msg['user_email'] ?></td>
                             <td><?= $msg['homepage'] ?></td>
                             <td><?= $msg['text'] ?></td>
-                            <td><img src="/msgs/<?= $msg['id'] . '/' . $msg['picture'] ?>"></td>
+                            <td><img width="160" height="120" src="/msgs/<?= $msg['id'] . '/' . $msg['picture'] ?>"></td>
                             <td><?= $msg['date'] ?></td>
                         </tr>
                     <?php endforeach; ?>

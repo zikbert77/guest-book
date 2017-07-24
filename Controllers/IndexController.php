@@ -19,6 +19,15 @@ use Models\User;
 class IndexController extends Controller
 {
 
+    public function false ()
+    {
+        $this->translate();
+
+        $this->view('false');
+
+        return true;
+    }
+
     public function main ()
     {
 
@@ -40,6 +49,15 @@ class IndexController extends Controller
         $pagination = new Pagination($countMsgs, $page, SHOW_PER_PAGE, 'page-');
 
         require_once ROOT . '/Views/main.php';
+        return true;
+    }
+
+    public function success ()
+    {
+        $this->translate();
+
+        $this->view('success');
+
         return true;
     }
 
