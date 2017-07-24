@@ -35,7 +35,7 @@ class AuthController extends Controller
 
                 if ( !$this->errors ) {
 
-                    $login['username'] = addslashes(trim(htmlspecialchars($_POST['username'])));
+                    $login['username'] = trim(strip_tags(htmlspecialchars($_POST['username'])));
                     $login['password'] = md5($_POST['pass']);
 
                     $user = new User();
@@ -74,10 +74,10 @@ class AuthController extends Controller
 
                 $user = new User();
 
-                $register['username'] = trim(htmlspecialchars($_POST['username']));
+                $register['username'] = trim(strip_tags(htmlspecialchars($_POST['username'])));
                 $register['password1'] = $_POST['pass1'];
                 $register['password2'] = $_POST['pass2'];
-                $register['email'] = $_POST['email'];
+                $register['email'] = trim(strip_tags(htmlspecialchars($_POST['email'])));
 
                 /*Валідація полів*/
                 if ( User::checkEmailExist($register['email']) )

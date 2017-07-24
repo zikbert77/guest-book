@@ -26,11 +26,11 @@
                     <span class="user-panel">
 
                         <?php if ( isset($_SESSION['user_id']) ): ?>
-                            <a href="/logout"><?= LOGOUT ?></a> &nbsp;
+                            <a href="/logout/"><?= LOGOUT ?></a> &nbsp;
                             <a href="/user/<?= $_SESSION['user_id'] ?>"><?= $_SESSION['user_name'] ?></a>
                         <?php else: ?>
-                            <a href="/login"><?= LOGIN ?></a> &nbsp;
-                            <a href="/register"><?= REGISTER ?></a>
+                            <a href="/login/"><?= LOGIN ?></a> &nbsp;
+                            <a href="/register/"><?= REGISTER ?></a>
                         <?php endif; ?>
                     </span>
 

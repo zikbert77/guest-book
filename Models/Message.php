@@ -12,8 +12,8 @@ class Message extends Model
     {
         $msgId = null;
 
-        $stmt = $this->db->prepare( "INSERT INTO messages ( homepage, text, user_id, username, email, lang_id ) VALUES ( :url, :text, :user_id, :username, :email, :lang_id )" );
-        $stmt->execute( array( 'url' => $msg['homepage'], 'text' => $msg['text'], 'user_id' => $msg['user_id'], 'username' => $msg['username'], 'email' => $msg['email'], 'lang_id' => $msg['lang'] ) );
+        $stmt = $this->db->prepare( "INSERT INTO `messages` ( homepage, text, picture, user_id, username, email, lang_id ) VALUES ( :url, :text, :picture, :user_id, :username, :email, :lang_id )" );
+        $stmt->execute( array( 'url' => $msg['homepage'], 'text' => $msg['text'], 'picture' => $msg['picture'], 'user_id' => $msg['user_id'], 'username' => $msg['username'], 'email' => $msg['email'], 'lang_id' => $msg['lang'] ) );
 
         $msgId = $this->db->lastInsertId();
 
@@ -56,14 +56,13 @@ class Message extends Model
         $per_page = SHOW_PER_PAGE;
         $limit_from = ($page * $per_page) - $per_page;
 
-        $order_column = ' data ';
-        $order_type = ' ASC ';
 
         $messages = array();
 
-        $stmt = $this->db->prepare("SELECT * FROM messages $order LIMIT ?, ?");
-        $stmt->bindParam(1, $limit_from, \PDO::PARAM_INT);
-        $stmt->bindParam(2, $per_page, \PDO::PARAM_INT);
+        $stmt = $this->db->prepare("SELECT * FROM `messages` WHERE lang_id = ? $order LIMIT ?, ?");
+        $stmt->bindParam(1, $_SESSION['lang']);
+        $stmt->bindParam(2, $limit_from, \PDO::PARAM_INT);
+        $stmt->bindParam(3, $per_page, \PDO::PARAM_INT);
         $stmt->execute();
 
         $i = 0;
@@ -71,6 +70,7 @@ class Message extends Model
             $messages[$i]['id'] = $row['id'];
             $messages[$i]['text'] = $row['text'];
             $messages[$i]['homepage'] = ($row['homepage'] === '')? '-' : $row['homepage'];
+            $messages[$i]['picture'] =  $row['picture'];
             $messages[$i]['user_id'] = $row['user_id'];
             $messages[$i]['user_name'] = $row['username'];
             $messages[$i]['user_email'] = $row['email'];

@@ -2,6 +2,37 @@
 
 <?php if ( isset( $_SESSION['user_id'] ) ): ?>
 
+    <script>
+
+        function readURL(input) {
+
+            var files = input.files;
+
+            var reader = [];
+            var images = document.getElementById('task_img');
+            var name;
+            for (var i in files) {
+                if (files.hasOwnProperty(i)) {
+                    name = 'file' + i;
+
+                    reader[i] = new FileReader();
+                    reader[i].readAsDataURL(input.files[i]);
+
+                    images.innerHTML += '<img width="320" height="240" id="'+ name +'" src="" />';
+
+                    (function (name) {
+                        reader[i].onload = function (e) {
+                            console.log(document.getElementById(name));
+                            document.getElementById(name).src = e.target.result;
+                        };
+                    })(name);
+
+                }
+            }
+        }
+
+    </script>
+
     <div class="container">
 
         <div class="row">
@@ -28,7 +59,7 @@
                             </div>
 
 
-                            <form method="post" action="#">
+                            <form method="post" action="#" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label for="username"><?= USERNAME ?></label>
                                     <input type="text" id="username" class="form-control" name="username" <?= ($user['username'])? 'value="'. $user['username'] .'" readonly ' : ' required' ?> placeholder="<?= USERNAME ?>">
@@ -43,9 +74,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="text"><?= MESSAGE ?></label>
-
                                     <textarea name="text" class="form-control" id="text" cols="30" rows="10" required><?= isset( $msg['text'] )? $msg['text'] : '' ?></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label for="task_email"><?= IMG ?> </label>
+                                    <input type="file" class="form-control" id="task_image" name="task_image" onChange="readURL(this)" required>
+                                </div>
+
                                 <div class="form-group form-captcha">
                                     <label for="captcha"><?= CAPTCHA ?></label>
                                     <img class="captcha" id="captcha" src="/Modules/Captcha/Captcha.php" title="<?= CHANGE_CAPTCHA ?>" alt="Капча"><br><br><br>

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <a class="btn btn-outline-primary" href="/add-message"><?= WRITE_MESSAGE ?></a>
+                <a class="btn btn-outline-primary" href="/add-message/"><?= WRITE_MESSAGE ?></a>
                 <br><br>
                 <table class="table table-bordered">
                     <tr>
@@ -10,6 +10,7 @@
                         <td><a href="<?= ( $sort == 'email_asc' )? "/page-$page/email_desc/" : "/page-$page/email_asc/"  ?>"><?= EMAIL ?></a></td>
                         <td><?= HOMEPAGE ?></td>
                         <td><?= MESSAGE ?></td>
+                        <td><?= IMG ?></td>
                         <td><a href="<?= ( $sort == 'date_asc' )? "/page-$page/date_desc/" : "/page-$page/date_asc/"  ?>"><?= DATE ?></a></td>
                     </tr>
 
@@ -19,6 +20,7 @@
                             <td><?= $msg['user_email'] ?></td>
                             <td><?= $msg['homepage'] ?></td>
                             <td><?= $msg['text'] ?></td>
+                            <td><img src="/msgs/<?= $msg['id'] . '/' . $msg['picture'] ?>"></td>
                             <td><?= $msg['date'] ?></td>
                         </tr>
                     <?php endforeach; ?>

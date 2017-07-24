@@ -31,9 +31,17 @@ define('CAPTCHA_ERROR', 'Невірно введено капчу!');
 define('CHANGE_CAPTCHA', 'Оновити капчу');
 define('ENTER_CAPTCHA', 'Введіть капчу');
 define('URL_ERROR', 'Некоректно введено url');
+define('IMG', 'Зображення');
+define('IMG_ERROR', 'Формат зображення повенен бути: jpg, png');
+define('IMG_UPLOAD_ERROR', 'Помилка при завантаженні зображення');
 define('ADD_MESSAGE', 'Добавити повідомлення');
 
 
+//User cabinet
+define('CHANGE', 'Змінити');
+define('CHANGE_LANG', 'Змінити мову');
+
+//Other
 define('PREVIEW', 'Попередній перегляд');
 define('WRITE_MESSAGE', 'Залишити повідомлення');
 define('MUST_LOGIN_OR_REGISTER', 'Для додавання повідомлення ви повинні увійти в аккаунт або зареєструватися');

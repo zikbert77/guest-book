@@ -10,7 +10,7 @@ class Controller
     protected $language_file = '/Languages/ukr.php';
     public $errors = false;
 
-    protected function translate(  )
+    protected function translate()
     {
 
         $id = $_SESSION['lang'];
